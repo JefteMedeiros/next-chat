@@ -21,7 +21,6 @@ export default function ChatRoom({ params }: { params: { id: string } }) {
             />
             <Button variant="outline">
               <SendHorizonal size={16} />
-              test
             </Button>
           </div>
         </div>
