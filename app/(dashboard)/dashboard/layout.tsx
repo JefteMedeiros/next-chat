@@ -4,8 +4,10 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { getServerSession } from "next-auth"
 
+import { FriendRequestSidebarOption } from "@/components/friend-request-sidebar-option"
 import { Icon, Icons } from "@/components/icons"
 import { SignOutButton } from "@/components/sign-out-button"
+import { fetchRedis } from "@/helpers/redis"
 import { authOptions } from "@/lib/auth"
 
 interface Props {
@@ -33,17 +35,22 @@ export default async function Layout({ children }: Props) {
 
   if (!session) notFound()
 
+  const unseenRequestCount = (
+    (await fetchRedis(
+      "smembers",
+      `user:${session.user.id}:incoming_friend_requests`,
+    )) as User[]
+  ).length
+
   return (
     <div className="w-full flex h-screen">
-      <div className="flex h-full w-full max-h-xs grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
+      <div className="hidden md:flex h-full w-full max-w-xs grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
         <Link className="flex h-16 shrink-0 items-center" href="/dashboard">
-          <Icons.UserPlus className="h-8 w-auto text-indigo-600" />
+          <Icons.Logo className="h-8 w-auto text-indigo-600" />
         </Link>
-
         <div className="text-xs font-semibold leading-6 text-gray-400">
           Your chats
         </div>
-
         <nav className="flex flex-1 flex-col">
           <ul role="list" className="flex flex-1 flex-col gap-y-7">
             <li>chats that this user has</li>
@@ -74,6 +81,13 @@ export default async function Layout({ children }: Props) {
               </ul>
             </li>
 
+            <li>
+              <FriendRequestSidebarOption
+                sessionId={session.user.id}
+                initialUnseenRequestCount={unseenRequestCount}
+              />
+            </li>
+
             <li className="-mx-6 mt-auto flex items-center">
               <div className="flex flex-1 items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900">
                 <div className="relative h-8 w-8 bg-gray-50">
@@ -100,7 +114,9 @@ export default async function Layout({ children }: Props) {
           </ul>
         </nav>
       </div>
-      {children}
+      <aside className="max-h-screen container py-16 md:py-12 w-full">
+        {children}
+      </aside>
     </div>
   )
 }
