@@ -1,7 +1,9 @@
 "use client"
 
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import axios, { AxiosError } from "axios"
 import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
@@ -21,12 +23,38 @@ const formSchema = z.object({
 })
 
 export function AddFriendButton() {
+  const [showSuccessState, setShowSuccessState] = useState(false)
+
   const methods = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   })
 
+  const addFriend = async (email: string) => {
+    try {
+      const validEmail = formSchema.parse({ email })
+
+      await axios.post("/api/friends/add", {
+        email: validEmail,
+      })
+
+      setShowSuccessState(true)
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        methods.setError("email", { message: error.message })
+        return
+      }
+
+      if (error instanceof AxiosError) {
+        methods.setError("email", { message: error.response?.data })
+        return
+      }
+
+      methods.setError("email", { message: "Something went wrong" })
+    }
+  }
+
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log(data)
+    addFriend(data.email)
   }
 
   return (
