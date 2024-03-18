@@ -4,8 +4,8 @@ import { db } from "./db"
 import GoogleProvider from "next-auth/providers/google"
 
 function getGoogleCredentials() {
-  const clientId = process.env.GOOGLE_CLIENT_ID
-  const clientSecret = process.env.GOOGLE_CLIENT_SECRET
+  const clientId = process.env.GOOGLE_CLIENT_ID as string
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET as string
 
   if (!clientId || clientSecret?.length === 0) {
     throw new Error("Missing GOOGLE_CLIENT_ID")
