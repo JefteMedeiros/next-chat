@@ -17,21 +17,19 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-
-const formSchema = z.object({
-  email: z.string().email(),
-})
+import { addFriendSchema } from "@/lib/validations/add-friend"
 
 export function AddFriendButton() {
   const [showSuccessState, setShowSuccessState] = useState(false)
 
-  const methods = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const methods = useForm<z.infer<typeof addFriendSchema>>({
+    resolver: zodResolver(addFriendSchema),
+    mode: "onSubmit",
   })
 
   const addFriend = async (email: string) => {
     try {
-      const validEmail = formSchema.parse({ email })
+      const validEmail = addFriendSchema.parse({ email })
 
       await axios.post("/api/friends/add", {
         email: validEmail,
@@ -53,13 +51,16 @@ export function AddFriendButton() {
     }
   }
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
+  const onSubmit = (data: z.infer<typeof addFriendSchema>) => {
     addFriend(data.email)
   }
 
   return (
     <Form {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        className="space-y-3 max-w-[400px] ml-4"
+      >
         <FormField
           control={methods.control}
           name="email"
@@ -73,6 +74,11 @@ export function AddFriendButton() {
                 We will send an invitation to this e-mail.
               </FormDescription>
               <FormMessage />
+              {!methods.formState.errors && showSuccessState && (
+                <span className="text-green-500 pt-1 block">
+                  Friend request sent!
+                </span>
+              )}
             </FormItem>
           )}
         />
