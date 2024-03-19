@@ -30,7 +30,39 @@ const Page: FC = () => {
       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full flex flex-col items-center max-w-md space-y-8">
           <div className="flex flex-col items-center gap-8">
-            logo
+            <svg
+              width="32"
+              height="34"
+              viewBox="0 0 32 34"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect x="11" y="6" width="10" height="22" rx="1" fill="#222222" />
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M22.6663 27.5006C22.6072 27.6327 22.476 27.7178 22.3312 27.7178C22.1285 27.7178 21.9642 27.5534 21.9642 27.3507L21.9642 11.135C21.9642 8.36374 24.2108 6.11716 26.9821 6.11716H31.5708C31.8078 6.11716 32 6.30931 32 6.54635C32 6.60676 31.9872 6.66648 31.9626 6.72163L22.6663 27.5006Z"
+                fill="#222222"
+              />
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M9.35035 27.5112C9.40962 27.6434 9.54103 27.7285 9.68595 27.7285C9.88906 27.7285 10.0537 27.5639 10.0537 27.3608L10.0537 11.1546C10.0537 8.37838 7.80311 6.12778 5.02684 6.12778H0.429022C0.192068 6.12778 -2.09808e-05 6.31987 -2.09808e-05 6.55682C-2.09808e-05 6.6173 0.0127668 6.6771 0.0375032 6.7323L9.35035 27.5112Z"
+                fill="#222222"
+              />
+              <path
+                d="M11 4.3V1.01922C11 0.527975 11.4928 0.189533 11.9513 0.36588L20.4813 3.64666C21.2056 3.92522 21.006 5 20.23 5H11.7C11.3134 5 11 4.6866 11 4.3Z"
+                fill="#222222"
+                stroke="#222222"
+                strokeWidth="0.01"
+              />
+              <path
+                d="M21 29.7V32.9808C21 33.472 20.5072 33.8105 20.0487 33.6341L11.5187 30.3533C10.7944 30.0748 10.994 29 11.77 29H20.3C20.6866 29 21 29.3134 21 29.7Z"
+                fill="#222222"
+                stroke="#222222"
+                strokeWidth="0.01"
+              />
+            </svg>
             <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
               Sign in to your account
             </h2>

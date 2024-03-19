@@ -82,6 +82,7 @@ export function AddFriendButton() {
             </FormItem>
           )}
         />
+        <pre>{JSON.stringify(showSuccessState, null, 2)}</pre>
         <Button type="submit">Submit</Button>
       </form>
     </Form>
