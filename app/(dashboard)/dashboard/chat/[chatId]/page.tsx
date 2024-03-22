@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth"
 
 import { fetchRedis } from "@/helpers/redis"
 import { authOptions } from "@/lib/auth"
+import { messageSchema } from "@/lib/validations/message"
 
 interface Props {
   params: { chatId: string }
@@ -21,7 +22,9 @@ async function getChatMessages(chatId: string) {
 
     const reversedDbMessages = dbMessages.reverse()
 
-    // const messages =
+    const messages = messageSchema.parse(reversedDbMessages)
+
+    return messages
   } catch (error) {
     notFound()
   }
