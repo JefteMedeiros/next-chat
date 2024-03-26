@@ -15,7 +15,7 @@ export function SignOutButton() {
   return (
     <Button
       variant="ghost"
-      className="gap-1 h-full aspect-square"
+      className="gap-1 p-0 h-full aspect-square"
       disabled={isSigningOut}
       onClick={async () => {
         setIsSigningOut(true)

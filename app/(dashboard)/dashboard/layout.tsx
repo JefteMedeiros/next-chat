@@ -60,7 +60,7 @@ export default async function Layout({ children }: Props) {
         <nav className="flex flex-1 flex-col">
           <ul role="list" className="flex flex-1 flex-col gap-y-7">
             <li>
-              <SidebarChatList friends={friends} />
+              <SidebarChatList sessionId={session.user.id} friends={friends} />
             </li>
             <li>
               <div className="text-xs font-semibold leading-6 text-gray-400">
@@ -95,8 +95,8 @@ export default async function Layout({ children }: Props) {
               </ul>
             </li>
 
-            <li className="-mx-6 mt-auto flex items-center">
-              <div className="flex flex-1 items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900">
+            <li className="flex items-center justify-between mt-auto min-h-16 -mx-6">
+              <div className="ml-6 flex items-center gap-2 text-sm font-semibold leading-6 text-gray-900">
                 <div className="relative h-8 w-8 bg-gray-50">
                   <Image
                     fill
@@ -121,9 +121,7 @@ export default async function Layout({ children }: Props) {
           </ul>
         </nav>
       </div>
-      <aside className="max-h-screen container py-16 md:py-12 w-full">
-        {children}
-      </aside>
+      <aside className="max-h-screen w-full">{children}</aside>
     </div>
   )
 }

@@ -13,6 +13,7 @@ interface Chat {
 interface Message {
   id: string
   senderId: string
+  text: string
   receiverId: string
   timestamp: number
 }
