@@ -2,11 +2,12 @@ import Image from "next/image"
 import { notFound } from "next/navigation"
 import { getServerSession } from "next-auth"
 
+import { ChatInput } from "@/components/chat-input"
 import { Messages } from "@/components/messages"
 import { fetchRedis } from "@/helpers/redis"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
-import { messageArraySchema, messageSchema } from "@/lib/validations/message"
+import { messageArraySchema } from "@/lib/validations/message"
 
 interface Props {
   params: { chatId: string }
@@ -52,7 +53,7 @@ export default async function Chat({ params }: Props) {
   const initialMessages = await getChatMessages(chatId)
 
   return (
-    <div className="flex-1 justify-between flex flex-col h-full max-h-[calc(100vh-6rem)]">
+    <div className="flex-1 justify-between flex flex-col h-full">
       <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
         <div className="relative flex items-center space-x-4">
           <div className="relative">
@@ -80,6 +81,7 @@ export default async function Chat({ params }: Props) {
       </div>
 
       <Messages initialMessages={initialMessages} sessionId={session.user.id} />
+      <ChatInput chatPartner={chatPartner} />
     </div>
   )
 }
